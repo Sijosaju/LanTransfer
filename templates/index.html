@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAN File Transfer</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Username Modal -->
+    <div id="usernameModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-user-circle"></i> Welcome!</h2>
+            <p>Please enter your name to continue</p>
+            <input type="text" id="usernameInput" class="username-input" placeholder="Enter your name..." autocomplete="off">
+            <button class="modal-btn" id="saveUsername">
+                <i class="fas fa-check"></i> Continue
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-wifi"></i> LAN Transfer</h1>
+            <p>Share files and chat across your local network</p>
+            <div class="user-badge" id="userBadge">
+                <i class="fas fa-user-circle"></i>
+                <span id="displayUsername"></span>
+                <button class="change-username" id="changeUsername" title="Change username">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="glass-card">
+            <h2 class="section-title">
+                <i class="fas fa-cloud-upload-alt"></i>
+                Upload Files
+            </h2>
+            <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+                <!-- FIXED: Moved button OUTSIDE the drop zone -->
+                <div class="upload-zone" id="dropZone">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <div class="upload-text">Drag & Drop files here</div>
+                    <div class="upload-subtext">or click the button below (max 500MB)</div>
+                    <input type="file" name="file" id="fileInput" required>
+                </div>
+                <!-- Button is now OUTSIDE the drop zone -->
+                <button type="button" class="upload-btn" id="browseBtn">
+                    <i class="fas fa-folder-open"></i> Browse Files
+                </button>
+            </form>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Uploading file...</p>
+            </div>
+        </div>
+
+        <!-- Available Files Section -->
+        <div class="glass-card">
+            <h2 class="section-title">
+                <i class="fas fa-folder-open"></i>
+                Available Files
+            </h2>
+            <div class="files-grid" id="filesList">
+                {% if files %}
+                    {% for file in files %}
+                    <div class="file-card">
+                        <div class="file-icon">
+                            <i class="fas fa-file"></i>
+                        </div>
+                        <div class="file-name">{{ file.name }}</div>
+                        <div class="file-info">
+                            <div>Size: {{ (file.size / 1024 / 1024)|round(2) }} MB</div>
+                            <div>{{ file.time }}</div>
+                        </div>
+                        <a href="/download/{{ file.name }}" class="download-btn">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-files">
+                        <i class="fas fa-folder-open" style="font-size: 3em; opacity: 0.5; margin-bottom: 15px;"></i>
+                        <p>No files uploaded yet</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="glass-card">
+            <h2 class="section-title">
+                <i class="fas fa-comments"></i>
+                Network Chat
+            </h2>
+            <div class="chat-container">
+                <div class="messages" id="messages"></div>
+                <div class="chat-input-group">
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        class="chat-input" 
+                        placeholder="Type a message..."
+                        autocomplete="off"
+                    >
+                    <button class="send-btn" id="sendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Flask==3.0.0
+Flask-SocketIO==5.3.5
+python-socketio==5.10.0
+qrcode[pil]==7.4.2
+zeroconf==0.131.0
+Werkzeug==3.0.1
