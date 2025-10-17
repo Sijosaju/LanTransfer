@@ -164,18 +164,3 @@ LanTransfer/
 🌍 Developed as part of a local network communication project.
 
 ---
-
-## 📜 License
-
-This project is licensed under the **MIT License** – you’re free to use, modify, and distribute it with attribution.
-
----
-
-### ⭐ If you found this project useful, give it a star on GitHub!
-
-```
-
----
-
-Would you like me to generate a small `requirements.txt` file (for Flask, Flask-SocketIO, etc.) to include in your repo too?
-```
