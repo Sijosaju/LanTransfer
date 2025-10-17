@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAN File Transfer</title>
-    <!-- Changed to local Socket.IO -->
+    <title>LAN Transfer</title>
+    <!-- Local Socket.IO -->
     <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
-    <!-- Changed to local Font Awesome -->
+    <!-- Local Font Awesome -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -33,6 +33,22 @@
                 <button class="change-username" id="changeUsername" title="Change username">
                     <i class="fas fa-edit"></i>
                 </button>
+            </div>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="glass-card qr-section">
+            <h2 class="section-title">
+                <i class="fas fa-qrcode"></i> Connect to This Server
+            </h2>
+            <div class="qr-container-inner">
+                <p class="server-url">{{ server_url }}</p>
+                <div class="qr-code-box">
+                    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code for connection">
+                </div>
+                <p class="qr-instruction">
+                    <i class="fas fa-mobile-alt"></i> Scan this QR code with your phone to connect
+                </p>
             </div>
         </div>
 

@@ -621,3 +621,84 @@ body::after {
     opacity: 0.6;
     cursor: not-allowed;
 }
+/* QR Code Section Styles */
+.qr-section {
+    text-align: center;
+}
+
+.qr-container-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.server-url {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    word-break: break-all;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    max-width: 100%;
+}
+
+.qr-code-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.qr-code-box img {
+    display: block;
+    max-width: 280px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.qr-instruction {
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    background: rgba(255, 255, 255, 0.15);
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.qr-instruction i {
+    font-size: 1.2em;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Responsive QR Code */
+@media (max-width: 768px) {
+    .server-url {
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+    
+    .qr-code-box img {
+        max-width: 220px;
+    }
+    
+    .qr-instruction {
+        font-size: 14px;
+    }
+}
