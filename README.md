@@ -1,8 +1,3 @@
-Here’s a clean, professional **README.md** file you can directly use for your GitHub repository 👇
-
----
-
-```markdown
 # 🌐 LanTransfer
 
 **LanTransfer** is a lightweight, offline-capable web application for **seamless file sharing and real-time communication** across devices on a **Local Area Network (LAN)**.  
