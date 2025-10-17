@@ -1,9 +1,3 @@
-Sure 👍 — here’s your **final README.md** file with the fixed formatting (no `bash` tags, only clean code blocks).
-You can directly copy-paste this into your `README.md` file on GitHub.
-
----
-
-```markdown
 # 🌐 LanTransfer
 
 **LanTransfer** is a lightweight, offline-capable web application for **seamless file sharing and real-time communication** across devices on a **Local Area Network (LAN)**.  
@@ -168,8 +162,8 @@ python app.py
 ## 👨‍💻 Author
 
 **Sijo Saju**  
-📧 [your-email@example.com]  
-💼 [LinkedIn Profile or Portfolio link]  
+📧 [sijosaju15@gmail.com]  
+💼 [https://www.linkedin.com/in/sijo-s-063373252/]  
 🌍 Developed as part of a local network communication project.
 
 ---
