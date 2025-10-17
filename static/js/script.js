@@ -2,9 +2,27 @@ const socket = io();
 let username = '';
 let isUploading = false;
 
-// Check if username exists in localStorage
+// Cookie functions as localStorage alternative
+function setCookie(name, value, days = 365) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+}
+
+function getCookie(name) {
+    const nameEQ = name + '=';
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// Check if username exists
 window.onload = function() {
-    const savedUsername = localStorage.getItem('lan_transfer_username');
+    const savedUsername = getCookie('lan_transfer_username');
     if (savedUsername) {
         username = savedUsername;
         document.getElementById('displayUsername').textContent = username;
@@ -12,6 +30,8 @@ window.onload = function() {
     } else {
         showUsernameModal();
     }
+    
+    console.log('Page loaded, username:', username);
 };
 
 // Show username modal
@@ -34,7 +54,7 @@ document.getElementById('saveUsername').addEventListener('click', function() {
     
     if (newUsername) {
         username = newUsername;
-        localStorage.setItem('lan_transfer_username', username);
+        setCookie('lan_transfer_username', username);
         document.getElementById('displayUsername').textContent = username;
         document.getElementById('userBadge').style.display = 'inline-flex';
         hideUsernameModal();
@@ -63,67 +83,138 @@ const uploadForm = document.getElementById('uploadForm');
 const loading = document.getElementById('loading');
 const browseBtn = document.getElementById('browseBtn');
 
-// Drag and drop events
+console.log('Elements found:', {
+    dropZone: !!dropZone,
+    fileInput: !!fileInput,
+    uploadForm: !!uploadForm,
+    loading: !!loading,
+    browseBtn: !!browseBtn
+});
+
+// Prevent default drag behaviors on document
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-    dropZone.addEventListener(eventName, preventDefaults, false);
+    document.addEventListener(eventName, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }, false);
 });
 
-function preventDefaults(e) {
+// Highlight drop zone when dragging over it
+dropZone.addEventListener('dragenter', function(e) {
     e.preventDefault();
-    e.stopPropagation();
-}
-
-['dragenter', 'dragover'].forEach(eventName => {
-    dropZone.addEventListener(eventName, () => {
-        dropZone.classList.add('dragover');
-    }, false);
+    dropZone.classList.add('dragover');
 });
 
-['dragleave', 'drop'].forEach(eventName => {
-    dropZone.addEventListener(eventName, () => {
-        dropZone.classList.remove('dragover');
-    }, false);
+dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
 });
 
 // Handle file drop
 dropZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('dragover');
+    
     const dt = e.dataTransfer;
     const files = dt.files;
     
+    console.log('Files dropped:', files.length);
+    
     if (files.length > 0 && !isUploading) {
         fileInput.files = files;
-        isUploading = true;
-        loading.classList.add('active');
-        uploadForm.submit();
+        handleFileUpload();
     }
-}, false);
+});
 
-// FIXED: Browse button click - now completely separate from drop zone
+// Browse button click handler
 browseBtn.addEventListener('click', function(e) {
+    console.log('Browse button clicked!');
     e.preventDefault();
     e.stopPropagation();
+    
     if (!isUploading) {
+        console.log('Triggering file input...');
         fileInput.click();
+    } else {
+        console.log('Already uploading, ignoring click');
     }
 });
 
-// FIXED: Auto-submit when file is selected
-fileInput.addEventListener('change', function(e) {
-    if (fileInput.files.length > 0 && !isUploading) {
-        isUploading = true;
-        loading.classList.add('active');
-        
-        // Small delay to ensure file is fully loaded
-        setTimeout(() => {
-            uploadForm.submit();
-        }, 150);
+// Also try adding click to the drop zone (optional fallback)
+dropZone.addEventListener('click', function(e) {
+    // Only trigger if clicking directly on drop zone, not the button
+    if (e.target === dropZone || e.target.closest('.upload-icon, .upload-text, .upload-subtext')) {
+        console.log('Drop zone clicked');
+        if (!isUploading) {
+            fileInput.click();
+        }
     }
 });
+
+// Handle file selection
+fileInput.addEventListener('change', function(e) {
+    console.log('File input changed');
+    console.log('Files selected:', fileInput.files.length);
+    
+    if (fileInput.files.length > 0) {
+        console.log('File name:', fileInput.files[0].name);
+        console.log('File size:', fileInput.files[0].size);
+        
+        if (!isUploading) {
+            handleFileUpload();
+        }
+    }
+});
+
+// Function to handle file upload
+function handleFileUpload() {
+    console.log('handleFileUpload called');
+    
+    if (isUploading) {
+        console.log('Already uploading, skipping');
+        return;
+    }
+    
+    if (fileInput.files.length === 0) {
+        console.log('No files selected');
+        return;
+    }
+    
+    isUploading = true;
+    loading.classList.add('active');
+    
+    console.log('Submitting form...');
+    
+    // Submit the form
+    uploadForm.submit();
+}
 
 // Socket.IO for real-time updates
 socket.on('file_uploaded', function(data) {
+    console.log('File uploaded event received:', data);
     isUploading = false;
     location.reload();
+});
+
+socket.on('connect', function() {
+    console.log('Socket.IO connected');
+});
+
+socket.on('disconnect', function() {
+    console.log('Socket.IO disconnected');
+});
+
+// Reset upload state if there's an error
+window.addEventListener('pageshow', function() {
+    console.log('Page show event');
+    isUploading = false;
+    loading.classList.remove('active');
 });
 
 // Chat functionality
@@ -186,3 +277,5 @@ function escapeHtml(text) {
     };
     return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 }
+
+console.log('Script fully loaded and initialized');

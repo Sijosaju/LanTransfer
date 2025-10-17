@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LAN File Transfer</title>
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Changed to local Socket.IO -->
+    <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
+    <!-- Changed to local Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -41,14 +43,12 @@
                 Upload Files
             </h2>
             <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
-                <!-- FIXED: Moved button OUTSIDE the drop zone -->
                 <div class="upload-zone" id="dropZone">
                     <i class="fas fa-cloud-upload-alt upload-icon"></i>
                     <div class="upload-text">Drag & Drop files here</div>
                     <div class="upload-subtext">or click the button below (max 500MB)</div>
                     <input type="file" name="file" id="fileInput" required>
                 </div>
-                <!-- Button is now OUTSIDE the drop zone -->
                 <button type="button" class="upload-btn" id="browseBtn">
                     <i class="fas fa-folder-open"></i> Browse Files
                 </button>
