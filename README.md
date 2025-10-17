@@ -167,8 +167,3 @@ python app.py
 🌍 Developed as part of a local network communication project.
 
 ---
-
-### ⭐ If you found this project useful, give it a star on GitHub!
-```
-
----
