@@ -1,3 +1,9 @@
+Sure 👍 — here’s your **final README.md** file with the fixed formatting (no `bash` tags, only clean code blocks).
+You can directly copy-paste this into your `README.md` file on GitHub.
+
+---
+
+```markdown
 # 🌐 LanTransfer
 
 **LanTransfer** is a lightweight, offline-capable web application for **seamless file sharing and real-time communication** across devices on a **Local Area Network (LAN)**.  
@@ -80,7 +86,7 @@ LanTransfer/
 │       └── socket.io.min.js
 └── uploads/                # Uploaded files directory
 
-````
+```
 
 ---
 
@@ -93,27 +99,30 @@ LanTransfer/
 ### 🔹 Steps
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/LanTransfer.git
-   cd LanTransfer
-````
+```
+
+git clone [https://github.com/yourusername/LanTransfer.git](https://github.com/yourusername/LanTransfer.git)
+cd LanTransfer
+
+```
 
 2. **Install dependencies**
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+pip install -r requirements.txt
+
+```
 
 3. **Run the Flask app**
+```
 
-   ```bash
-   python app.py
-   ```
+python app.py
+
+```
 
 4. **Access the app**
-
-   * Open your browser and go to `http://<your_local_IP>:5000`
-   * Or scan the **QR code** displayed in the terminal.
+- Open your browser and go to `http://<your_local_IP>:5000`
+- Or scan the **QR code** displayed in the terminal.
 
 ---
 
@@ -139,28 +148,33 @@ LanTransfer/
 
 ## 🧩 Future Enhancements
 
-* 🔍 File search and categorization
-* 🔐 User authentication
-* 🗑️ File deletion and management
-* 📜 Upload history tracking
-* 📤 Multiple simultaneous uploads
+* 🔍 File search and categorization  
+* 🔐 User authentication  
+* 🗑️ File deletion and management  
+* 📜 Upload history tracking  
+* 📤 Multiple simultaneous uploads  
 
 ---
 
 ## 🧾 References
 
-* [Flask-SocketIO Documentation](https://flask-socketio.readthedocs.io)
-* [Flask QRCode](https://marcoagner.github.io/Flask-QRcode/)
-* [Generate QR Code using Python](https://www.geeksforgeeks.org/python/generate-qr-code-using-qrcode-in-python/)
-* [Miguel Grinberg’s Flask-SocketIO Examples](https://github.com/miguelgrinberg/Flask-SocketIO)
+* [Flask-SocketIO Documentation](https://flask-socketio.readthedocs.io)  
+* [Flask QRCode](https://marcoagner.github.io/Flask-QRcode/)  
+* [Generate QR Code using Python](https://www.geeksforgeeks.org/python/generate-qr-code-using-qrcode-in-python/)  
+* [Miguel Grinberg’s Flask-SocketIO Examples](https://github.com/miguelgrinberg/Flask-SocketIO)  
 
 ---
 
 ## 👨‍💻 Author
 
-**Sijo Saju**
-📧 [[your-email@example.com](mailto:your-email@example.com)]
-💼 [LinkedIn Profile or Portfolio link]
+**Sijo Saju**  
+📧 [your-email@example.com]  
+💼 [LinkedIn Profile or Portfolio link]  
 🌍 Developed as part of a local network communication project.
+
+---
+
+### ⭐ If you found this project useful, give it a star on GitHub!
+```
 
 ---
