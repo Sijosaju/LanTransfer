@@ -11,7 +11,7 @@ import base64
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-here'
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500MB max
+app.config['MAX_CONTENT_LENGTH'] = 5000 * 1024 * 1024  # 500MB max
 
 socketio = SocketIO(app, cors_allowed_origins="*")
 uploaded_files = []
